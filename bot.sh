@@ -2,12 +2,12 @@
 #
 # This script handles your Discord Bots (only python!) 
 
-bots=("test" "Minecraft") # list of bots for "all" case !!! NO FILE-ENDINGS !!!
-arg_length="${#}"   # length of cli arguments
-target="${2}"   # target which should be handled
-method="${1}"   # method to handle $target
+bots=("test" "Minecraft")           # list of bots for "all" case !!! NO FILE-ENDINGS !!!
+arg_length="${#}"                   # length of cli arguments
+target="${2}"                       # target which should be handled
+method="${1}"                       # method to handle $target
 
-BOT_DIR="/var/lib/discord/bots" # Directory where the bots are located
+BOT_DIR="/var/lib/discord/bots"     # Directory where the bots are located
 
 #######################################
 #        starting specific bots       #
@@ -26,7 +26,7 @@ function start {
             else 
                 echo "${bot} was not found!"
             fi
-            return 0
+            return 0 
         fi
         for bot in "${bots[@]}"
         do
@@ -95,10 +95,16 @@ function list {
 #  displaying the help page (--help)  #
 #######################################
 function displayHelp {
-    echo "dc-bot [action]"
-    echo "--start) Starting the bots"
-    echo "--stop) Stopping the bots"
-    echo "--help) Shows this Page"
+    echo '<------------------------------------------>'
+    echo 'dc-bot [action] <target>'
+    echo '<-----------------[actions]---------------->'
+    echo '--start) -  Starting the bots'
+    echo '--stop)  -  Stopping the bots'
+    echo '--help)  -  Shows this Page'
+    echo '<-----------------<target>----------------->'
+    echo 'all)     -  manage all bots in bots array'
+    echo '<bot>)   -  manage a specific bot'
+    echo '<------------------------------------------>'
     return 0
 }
 
@@ -106,38 +112,38 @@ function displayHelp {
 #        handling the execution       #
 #######################################
 function handleExec {
-        if [[ "${method}" -ne "" ]]; then
-            case "${method}" in
-            --start)
-                if [[ "${target}" = "all" && "${arg_length}" -eq 2 ]]; then
-                    start all || return 1
-                elif [[ "${arg_length}" -eq 2 ]]; then
-                    start "${target}" || return 1
-                else
-                    echo "not enough arguments! use --help"
-                fi
-                ;;
-            --stop)
-                if [[ "${target}" = "all" && "${arg_length}" -eq 2 ]]; then
-                    stop all || return 1
-                elif [[ "${arg_length}" -eq 2 ]]; then
-                    stop "${target}" || return 1
-                else 
-                    echo "not enough arguments! use --help"
-                fi
-                ;;
-            --help)
-                displayHelp || return 1
-                ;;
-            --list)
-                list || return 1
-                ;;
-            *) 
-                echo "Invalid Option ${method}! use --help"
-            esac
-        else
-            echo "please specify an Method! use --help"
-        fi
+    if [[ "${method}" -ne "" ]]; then
+        case "${method}" in
+        --start)
+            if [[ "${target}" = "all" && "${arg_length}" -eq 2 ]]; then
+                start all || return 1
+            elif [[ "${arg_length}" -eq 2 ]]; then
+                start "${target}" || return 1
+            else
+                echo "not enough arguments! use --help"
+            fi
+            ;;
+        --stop)
+            if [[ "${target}" = "all" && "${arg_length}" -eq 2 ]]; then
+                stop all || return 1
+            elif [[ "${arg_length}" -eq 2 ]]; then
+                stop "${target}" || return 1
+            else 
+                echo "not enough arguments! use --help"
+            fi
+            ;;
+        --help)
+            displayHelp || return 1
+            ;;
+        --list)
+            list || return 1
+            ;;
+        *) 
+            echo "Invalid Option ${method}! use --help"
+        esac
+    else
+        echo "please specify an Method! use --help"
+    fi
 }
 
 handleExec || return 1
