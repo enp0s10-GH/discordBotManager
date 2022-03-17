@@ -2,12 +2,12 @@
 #
 # This script handles your Discord Bots (only python!) 
 
-bots=("test" "Minecraft")           # list of bots for "all" case !!! NO FILE-ENDINGS !!!
+bots=("your" "bots" "here")           # list of bots for "all" case !!! NO FILE-ENDINGS !!!
 arg_length="${#}"                   # length of cli arguments
 target="${2}"                       # target which should be handled
 method="${1}"                       # method to handle $target
 
-BOT_DIR="/var/lib/discord/bots"     # Directory where the bots are located
+BOT_DIR="/path/where/your/bots/are/located"     # Directory where the bots are located (WITHOUT / at the end!)
 
 #######################################
 #        starting specific bots       #
